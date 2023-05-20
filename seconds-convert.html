@@ -8,10 +8,14 @@
         const urlParams = new URLSearchParams(window.location.search);
         const secondsInput = urlParams.get('seconds');
 
+        // Check if secondsInput is not null or empty
         if (secondsInput && !isNaN(secondsInput)) {
-          const date = new Date(null);
-          date.setSeconds(secondsInput);
-          const result = date.toISOString().slice(11, 19);
+          const totalSeconds = parseInt(secondsInput, 10);
+          const hours = Math.floor(totalSeconds / 3600);
+          const minutes = Math.floor((totalSeconds % 3600) / 60);
+          const seconds = totalSeconds % 60;
+          
+          const result = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
           const resultJson = { result: result };
           document.getElementById('result').textContent = JSON.stringify(resultJson);
         } else {
