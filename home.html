@@ -1,8 +1,27 @@
 <!DOCTYPE html>
 <html>
-  <head>
-  </head>
-  <body>
-    <div id="inch-calculator-icw" data-ct="seconds_to_time" data-cw="100%" data-ch="375" data-cv="MTE2ODQ1ODEyMTQ="><div id="inch-calculator-icwh">Seconds to HH:MM:SS Time Calculator</div><div id="inch-calculator-icwf"><a id="inch-calculator-icwi" href="https://www.inchcalculator.com/seconds-to-time-calculator/" target="_blank"><img id="inch-calculator-icwl" src="https://cdn.inchcalculator.com/e/inch-calculator-logo-tiny.png" alt="Inch Calculator Logo"><span id="inch-calculator-icwb">Inch Calculator</span></a></div></div><script src="https://cdn.inchcalculator.com/e/widgets.min.js" async defer></script>
-  </body>
+<head>
+  <script>
+    function convertSeconds() {
+      const secondsInput = document.getElementById('secondsInput').value;
+
+      // Make the HTTP GET request
+      fetch(`http://example.com/convert?seconds=${secondsInput}`)
+        .then(response => response.json())
+        .then(data => {
+          const result = data.result;
+          document.getElementById('result').textContent = result;
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+  </script>
+</head>
+<body>
+  <label for="secondsInput">Enter the number of seconds:</label>
+  <input type="number" id="secondsInput">
+  <button onclick="convertSeconds()">Convert</button>
+  <p id="result"></p>
+</body>
 </html>
