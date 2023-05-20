@@ -6,7 +6,6 @@
       const urlParams = new URLSearchParams(window.location.search);
       const secondsInput = urlParams.get('seconds');
 
-      // Check if secondsInput is not null or empty
       if (secondsInput) {
         const date = new Date(null);
         date.setSeconds(secondsInput);
