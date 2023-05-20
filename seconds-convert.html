@@ -3,25 +3,21 @@
 <head>
   <script>
     function convertSeconds() {
-      const secondsInput = document.getElementById('secondsInput').value;
+      const urlParams = new URLSearchParams(window.location.search);
+      const secondsInput = urlParams.get('seconds');
 
-      // Make the HTTP GET request
-      fetch(`https://chilli0542.github.io/seconds-convert?seconds=${secondsInput}`)
-        .then(response => response.json())
-        .then(data => {
-          const result = data.result;
-          document.getElementById('result').textContent = result;
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
+      // Check if secondsInput is not null or empty
+      if (secondsInput) {
+        const date = new Date(null);
+        date.setSeconds(secondsInput);
+        const result = date.toISOString().slice(11, 19);
+        const resultJson = { result: result };
+        document.getElementById('result').textContent = JSON.stringify(resultJson);
+      }
     }
   </script>
 </head>
-<body>
-  <label for="secondsInput">Enter the number of seconds:</label>
-  <input type="number" id="secondsInput">
-  <button onclick="convertSeconds()">Convert</button>
-  <p id="result"></p>
+<body onload="convertSeconds()">
+  <pre id="result"></pre>
 </body>
 </html>
