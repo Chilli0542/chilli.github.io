@@ -7,27 +7,31 @@
   <pre id="result"></pre>
 
   <script>
+    function handleResponse(data) {
+      document.getElementById('result').textContent = JSON.stringify(data);
+    }
+
     function convertSeconds() {
+      try {
         const urlParams = new URLSearchParams(window.location.search);
         const secondsInput = urlParams.get('seconds');
 
+        // Check if secondsInput is not null or empty
         if (secondsInput && !isNaN(secondsInput)) {
           const url = 'https://chilli0542.github.io/seconds-convert?seconds=' + secondsInput;
-
-          fetch(url)
-            .then(response => response.json())
-            .then(data => {
-              document.getElementById('result').textContent = JSON.stringify(data);
-            })
-            .catch(error => {
-              console.error('Error:', error);
-              const errorJson = { result: 'An error occurred' };
-              document.getElementById('result').textContent = JSON.stringify(errorJson);
-            });
+          const script = document.createElement('script');
+          script.src = url + '&callback=handleResponse';
+          document.body.appendChild(script);
         } else {
           const errorJson = { result: 'Invalid number' };
           document.getElementById('result').textContent = JSON.stringify(errorJson);
         }
+      } catch (error) {
+        const errorJson = { result: 'An error occurred' };
+        document.getElementById('result').textContent = JSON.stringify(errorJson);
+        console.error('Error:', error);
+      }
+    }
 
     // Call convertSeconds on page load
     window.onload = convertSeconds;
