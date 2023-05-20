@@ -8,7 +8,7 @@
 
   <script>
     function convertSeconds() {
-      try {
+      //try {
         const urlParams = new URLSearchParams(window.location.search);
         const secondsInput = urlParams.get('seconds');
 
@@ -29,11 +29,11 @@
           const errorJson = { result: 'Invalid number' };
           document.getElementById('result').textContent = JSON.stringify(errorJson);
         }
-      } catch (error) {
-        const errorJson = { result: 'An error occurred' };
-        document.getElementById('result').textContent = JSON.stringify(errorJson);
-        console.error('Error:', error);
-      }
+      //} catch (error) {
+        //const errorJson = { result: 'An error occurred' };
+        //document.getElementById('result').textContent = JSON.stringify(errorJson);
+        //console.error('Error:', error);
+      //}
     }
 
     // Call convertSeconds on page load
