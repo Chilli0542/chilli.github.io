@@ -8,14 +8,29 @@
         const urlParams = new URLSearchParams(window.location.search);
         const secondsInput = urlParams.get('seconds');
 
-        // Check if secondsInput is not null or empty
         if (secondsInput && !isNaN(secondsInput)) {
           const totalSeconds = parseInt(secondsInput, 10);
-          const hours = Math.floor(totalSeconds / 3600);
+          const years = Math.floor(totalSeconds / 31536000);
+          const months = Math.floor((totalSeconds % 31536000) / 2592000);
+          const days = Math.floor((totalSeconds % 2592000) / 86400);
+          const hours = Math.floor((totalSeconds % 86400) / 3600);
           const minutes = Math.floor((totalSeconds % 3600) / 60);
           const seconds = totalSeconds % 60;
+
+          let result = '';
+          if (years > 0) {
+            result += years.toString() + ' year(s), ';
+          }
+          if (months > 0) {
+            result += months.toString() + ' month(s), ';
+          }
+          if (days > 0) {
+            result += days.toString() + ' day(s), ';
+          }
+          result += hours.toString().padStart(2, '0') + ':' +
+                    minutes.toString().padStart(2, '0') + ':' +
+                    seconds.toString().padStart(2, '0');
           
-          const result = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
           const resultJson = { result: result };
           document.getElementById('result').textContent = JSON.stringify(resultJson);
         } else {
