@@ -2,6 +2,10 @@
 <html>
 <head>
   <title>Seconds to Time Converter</title>
+</head>
+<body>
+  <pre id="result"></pre>
+
   <script>
     function convertSeconds() {
       try {
@@ -9,36 +13,18 @@
         const secondsInput = urlParams.get('seconds');
 
         if (secondsInput && !isNaN(secondsInput)) {
-          const totalSeconds = parseInt(secondsInput, 10);
-          const years = Math.floor(totalSeconds / 31536000);
-          const months = Math.floor((totalSeconds % 31536000) / 2592000);
-          const days = Math.floor((totalSeconds % 2592000) / 86400);
-          const hours = Math.floor((totalSeconds % 86400) / 3600);
-          const minutes = Math.floor((totalSeconds % 3600) / 60);
-          const seconds = totalSeconds % 60;
+          const url = 'https://chilli0542.github.io/seconds-convert?seconds=' + secondsInput;
 
-          let result = '';
-          if (years === 1) {
-            result += years.toString() + ' year, ';
-          } else if (years > 1) {
-            result += years.toString() + ' years, ';
-          }
-          if (months === 1) {
-            result += months.toString() + ' month, ';
-          } else if (months > 1) {
-            result += months.toString() + ' months, ';
-          }
-          if (days === 1) {
-            result += days.toString() + ' day, ';
-          } else if (days > 1) {
-            result += days.toString() + ' days, ';
-          }
-          result += hours.toString().padStart(2, '0') + ':' +
-                    minutes.toString().padStart(2, '0') + ':' +
-                    seconds.toString().padStart(2, '0');
-          
-          const resultJson = { result: result };
-          document.getElementById('result').textContent = JSON.stringify(resultJson);
+          fetch(url)
+            .then(response => response.json())
+            .then(data => {
+              document.getElementById('result').textContent = JSON.stringify(data);
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              const errorJson = { result: 'An error occurred' };
+              document.getElementById('result').textContent = JSON.stringify(errorJson);
+            });
         } else {
           const errorJson = { result: 'Invalid number' };
           document.getElementById('result').textContent = JSON.stringify(errorJson);
@@ -49,9 +35,9 @@
         console.error('Error:', error);
       }
     }
+
+    // Call convertSeconds on page load
+    window.onload = convertSeconds;
   </script>
-</head>
-<body onload="convertSeconds()">
-  <pre id="result"></pre>
 </body>
 </html>
