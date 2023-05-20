@@ -18,14 +18,20 @@
           const seconds = totalSeconds % 60;
 
           let result = '';
-          if (years > 0) {
-            result += years.toString() + ' year(s), ';
+          if (years === 1) {
+            result += years.toString() + ' year, ';
+          } else if (years > 1) {
+            result += years.toString() + ' years, ';
           }
-          if (months > 0) {
-            result += months.toString() + ' month(s), ';
+          if (months === 1) {
+            result += months.toString() + ' month, ';
+          } else if (months > 1) {
+            result += months.toString() + ' months, ';
           }
-          if (days > 0) {
-            result += days.toString() + ' day(s), ';
+          if (days === 1) {
+            result += days.toString() + ' day, ';
+          } else if (days > 1) {
+            result += days.toString() + ' days, ';
           }
           result += hours.toString().padStart(2, '0') + ':' +
                     minutes.toString().padStart(2, '0') + ':' +
