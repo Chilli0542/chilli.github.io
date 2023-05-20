@@ -1,17 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>Seconds to Time Converter</title>
   <script>
     function convertSeconds() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const secondsInput = urlParams.get('seconds');
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const secondsInput = urlParams.get('seconds');
 
-      if (secondsInput) {
-        const date = new Date(null);
-        date.setSeconds(secondsInput);
-        const result = date.toISOString().slice(11, 19);
-        const resultJson = { result: result };
-        document.getElementById('result').textContent = JSON.stringify(resultJson);
+        if (secondsInput && !isNaN(secondsInput)) {
+          const date = new Date(null);
+          date.setSeconds(secondsInput);
+          const result = date.toISOString().slice(11, 19);
+          const resultJson = { result: result };
+          document.getElementById('result').textContent = JSON.stringify(resultJson);
+        } else {
+          const errorJson = { result: 'Invalid number' };
+          document.getElementById('result').textContent = JSON.stringify(errorJson);
+        }
+      } catch (error) {
+        const errorJson = { result: 'An error occurred' };
+        document.getElementById('result').textContent = JSON.stringify(errorJson);
+        console.error('Error:', error);
       }
     }
   </script>
